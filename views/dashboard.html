@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Dashboard</title>
+	<link href="../assets/b5/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/index.css">
+	<link href="../assets/css/dashboard.css" rel="stylesheet">
+
+</head>
+<body class="dashboard-body">
+
+<header>
+	<section class="container-fluid px-5">
+		<div class="row">
+		<div class="col-3 d-flex flex-row align-items-center">
+			<div class="logo"><img src="../assets/icons/logo.png" alt="logo"></div>
+			<h1 class="fs-2 fw-bold">Bitacora App</h1>
+		</div>
+					
+		<div class="col-6 d-flex flex-row align-items-center justify-content-center">
+			<div id="dashboard-menu" class="d-flex justify-content-center align-items-center">			
+				<a href="#" class="active text-decoration-none link-menu-dashboard">Actividades</a>
+			</div>
+		</div>
+
+		<div class="col-3 d-flex flex-row align-items-center justify-content-end">
+			<div class="d-flex flex-row align-items-center gap-3">
+				<h4>Donquis</h4>
+				<a href="#" class="link-profile-dashboard"><img src="../assets/icons/profile.svg" alt=""> </a>
+			</div>
+		</div>
+
+	</div>	
+	</section>
+	
+</header>
+
+<section class="container">
+	<table id="myTable" class="table table-hover">
+	<div class="w-full d-flex justify-content-end">
+		<a href="#" class="action-add-activity bg-success shadow" id="btnCreateActivity"><img src="../assets/icons/add.svg" alt=""></a>
+	</div>
+    <thead>
+        <tr>
+        	<th>Cod</th>
+            <th>Nombre de actividad</th>
+            <th>Estado</th>
+            <th>Ubicación SSF</th>
+            <th>Dirección/Oficina </th>
+            <th>Porcentaje</th>
+            <th>Fecha</th>
+            <th>Iniciada en</th>
+            <th>Terminada en</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+   	<span class="zero-registers d-none">No se han encontrado registros</span>
+    <tbody id="activities-table-body">
+    </tbody>
+</table>
+</section>
+
+
+<!-- Modal To Create -->
+<section class="Modal d-none" id="modalToCreateActivity">
+	<section class="container modalTemplate createActivityModal shadow" >
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center"> 
+			<h2 class="p-2 mb-4 title-modal-activity">Nueva Actividad</h2>
+			<a href="#" class="cancel-modal" id="btnCancelModal"><img src="../assets/icons/cancel.svg" alt=""></a>
+		</div>
+		<form class="form-card" id="formNewActivity" onsubmit="event.preventDefault()">
+	                    <div class="row justify-content-between text-left">
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex"> 
+	                        	<label class="form-control-label px-3">Titulo de actividad<span class="text-danger"> *</span></label>
+	                        	 <input type="text" id="titleActivityInput" name="titleActivityInput" placeholder="Ingrese el titulo" onblur="validate(1)"> 
+	                        </div>
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Ubicación SSF <span class="text-danger"> *</span></label> 
+		                         <select class="form-select" name="locationsBox" aria-label="ubicacion ssf" id="locationsBox">
+								  
+								</select>
+	                     	</div>
+
+	                    </div>
+	                    <div class="row justify-content-between text-left my-3">
+	                     
+	                    	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Dirección/Oficina <span class="text-danger"> *</span></label> 
+		                         <select class="form-select" name="officesBox" aria-label="Oficina" id="officesBox">
+								  
+								</select>
+	                     	</div>
+
+	                     	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">División<span class="text-danger"> *</span></label> 
+		                         <select class="form-select" aria-label="Division" name="divisionsBox" id="divisionsBox" disabled>
+								  
+								</select>
+	                     	</div>
+
+	                    </div>
+	                    <div class="row justify-content-between text-left">
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Departamento<span class="text-danger"> *</span></label> 
+		                         <select class="form-select" aria-label="Departamento" name="departmentsBox" id="departmentsBox" disabled>
+								  
+								</select>
+	                     	</div>
+
+	                     	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Fecha de inicio<span class="text-danger"> *</span></label>
+	                        	 <input type="date" name="startDateActivity"  id="startDateActivity" onblur="validate(2)"> 
+	                     	</div>
+
+	                    </div>
+
+	                    <div class="row justify-content-between text-left">
+	                        <div class="form-group col-12 flex-column d-flex"> 
+	                        	<label class="form-control-label px-3">Observación</label> 
+	                        	<textarea class="form-control" name="observation" rows="3"></textarea>
+	                         </div>
+	                    </div>
+	                    <div class="row justify-content-end mt-5">
+	                        <div class="form-group col-sm-6  d-flex justify-content-end"> 
+	                        	<button type="submit" id="submitNewActivity" class="btn px-5 btn-primary">Crear</button> 
+	                        </div>
+	                    </div>
+	                </form>
+	</section>
+</section>
+
+<!-- Modal To Update -->
+<section class="Modal d-none" id="modalToUpdateActivity">
+	<section class="container modalTemplate shadow" >
+		<div class="d-flex flex-row w-100 justify-content-between align-items-center"> 
+			<h2 class="p-2 mb-4 title-modal-activity">Actualizar Actividad</h2>
+			<a href="#" class="cancel-modal" id="btnCancelModalUpdate"><img src="../assets/icons/cancel.svg" alt=""></a>
+		</div>
+		<form class="form-card" id="formUpdateActivity" onsubmit="event.preventDefault()">
+	                    <div class="row justify-content-between text-left">
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex"> 
+	                        	<label class="form-control-label px-3">Titulo de actividad<span class="text-danger"> *</span></label>
+	                        	 <input type="text" id="titleActivityUpdate" name="titleActivityUpdate" placeholder="Ingrese el titulo" onblur="validate(1)"> 
+	                        </div>
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Ubicación SSF <span class="text-danger"> *</span></label> 
+		                         <select class="form-select" name="locationsBoxUpdate" aria-label="ubicacion ssf" id="locationsBoxUpdate">
+								  
+								</select>
+	                     	</div>
+
+	                    </div>
+	                    <div class="row justify-content-between text-left my-3">
+	                     
+	                    	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Dirección/Oficina <span class="text-danger"> *</span></label> 
+		                         <select class="form-select" name="officesBoxUpdate" aria-label="Oficina" id="officesBoxUpdate">
+								  
+								</select>
+	                     	</div>
+
+	                     	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">División<span class="text-danger"> *</span></label> 
+		                         <select class="form-select" aria-label="Division" name="divisionsBoxUpdate" id="divisionsBoxUpdate">
+								  
+								</select>
+	                     	</div>
+
+	                    </div>
+	                    <div class="row justify-content-between text-left">
+	                        
+	                        <div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Departamento<span class="text-danger"> *</span></label> 
+		                         <select class="form-select" aria-label="Departamento" name="departmentsBoxUpdate" id="departmentsBoxUpdate">
+								  
+								</select>
+	                     	</div>
+
+	                     	<div class="form-group col-sm-6 flex-column d-flex">
+		                         <label class="form-control-label px-3">Fecha de inicio<span class="text-danger"> *</span></label>
+	                        	 <input type="date" name="startDateActivityUpdate"  id="startDateActivityUpdate" onblur="validate(2)"> 
+	                     	</div>
+
+	                    </div>
+	                    <div class="row justify-content-between text-left">
+	                        
+	                        <div class="form-group col-sm-4 flex-column d-flex">
+		                         <label class="form-control-label px-3">Fecha de finalización<span class="text-danger"> *</span></label>
+	                        	 <input type="date" name="endDateActivityUpdate"  id="endDateActivityUpdate"> 
+	                     	</div>
+
+	                     	<div class="form-group col-sm-4 flex-column d-flex">
+		                         <label class="form-control-label px-3">Estado<span class="text-danger"> *</span></label> 
+		                         <select class="form-select" aria-label="Estado" name="statusUpdate" id="statusUpdate">
+								  
+								  <option value="En desarrollo">En desarrollo</option>
+								  <option value="Finalizada">Finalizada</option>
+								  <option value="Detenida">Detenida</option>
+
+								</select>
+	                     	</div>
+
+	                     	<div class="form-group col-sm-4 flex-column d-flex">
+		                         <label class="form-control-label px-3">Porcentaje<span class="text-danger"> *</span></label> 
+		                         <input type="number" name="progressUpdate"  id="progressUpdate" value=""> 
+
+	                     	</div>
+
+	                    </div>
+
+	            
+
+	                    <div class="row justify-content-between text-left">
+	                        <div class="form-group col-12 flex-column d-flex"> 
+	                        	<label class="form-control-label px-3">Observación</label> 
+	                        	<textarea class="form-control" name="observationUpdate" id="observationUpdate" rows="3"></textarea>
+	                         </div>
+	                    </div>
+
+	                    <div class="row justify-content-end mt-5" id="boxUpdate">
+	                        <div class="form-group col-sm-6  d-flex justify-content-end"> 
+	                        	<button type="submit" id="submitUpdateActivity" class="btn px-5 btn-primary">Actualizar</button> 
+	                        </div>
+	                    </div>
+
+	                    <div class="row justify-content-end mt-5 d-none" id="boxReplicate">
+	                        <div class="form-group col-sm-6  d-flex justify-content-end"> 
+	                        	<button type="submit" id="submitReplicateActivity" class="btn px-5 btn-success">Dar Seguimiento</button> 
+	                        </div>
+	                    </div>
+
+	                    <input type="hidden" value="" name="activityId" id="activityId">
+	                    <input type="hidden" value="" name="activityCode" id="activityCode">
+
+	                </form>
+	</section>
+</section>
+
+<script src="../assets/b5/js/bootstrap.bundle.min.js"></script>
+
+<script>
+
+	let modalToCreateActivity = document.getElementById('modalToCreateActivity');
+    let modalToUpdateActivity = document.getElementById('modalToUpdateActivity');
+
+
+	
+	document.addEventListener('click', e => 
+	{
+		if(e.target.matches('#btnCreateActivity') || e.target.matches('#btnCreateActivity>*') )
+		{
+			modalToCreateActivity.classList.toggle('d-none')
+		}
+
+		if(e.target.matches('#btnCancelModal') || e.target.matches('#btnCancelModal>*') )
+		{
+			modalToCreateActivity.classList.toggle('d-none')
+		}
+
+		if(e.target.matches('#btnCancelModalUpdate') || e.target.matches('#btnCancelModalUpdate>*') )
+		{
+			modalToUpdateActivity.classList.toggle('d-none')
+		}
+
+
+
+		
+
+
+		
+	},true)
+
+
+
+	function validate(val) 
+	{
+	    v1 = document.getElementById("titleActivityInput");
+	    v2 = document.getElementById("startDateActivity");
+
+
+	    flag1 = true;
+	    flag2 = true;
+
+	    if(val>=1 || val==0) 
+	    {
+	        if(v1.value == "") {
+	            v1.style.borderColor = "red";
+	            flag1 = false;
+	        }
+	        else {
+	            v1.style.borderColor = "green";
+	            flag1 = true;
+	        }
+	    }
+
+	    if(val>=2) 
+	    {
+	        if(v2.value == "") {
+	            v2.style.borderColor = "red";
+	            flag2 = false;
+	        }
+	        else {
+	            v2.style.borderColor = "green";
+	            flag2 = true;
+	        }
+
+	          
+
+
+	    }
+
+	    flag = flag1 && flag2;
+
+	    return flag;
+	}
+
+
+	const customDateInput = document.getElementById("startDateActivity");
+
+	const today = new Date();
+	const year = today.getFullYear();
+	const month = String(today.getMonth() + 1).padStart(2, "0");
+	const day = String(today.getDate()).padStart(2, "0");
+	const formattedDate = `${year}-${month}-${day}`;
+
+	// Establecer el valor inicial del campo de entrada
+	customDateInput.value = formattedDate;
+
+	// Agregar un listener para validar el valor del campo al perder el foco
+	customDateInput.addEventListener("blur", function() {
+	  const inputValue = customDateInput.value;
+	  // Aquí puedes realizar la validación o realizar otras acciones con el valor ingresado
+	});
+
+</script>
+</body>
+</html>

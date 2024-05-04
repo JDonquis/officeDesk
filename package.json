@@ -1,0 +1,25 @@
+{
+  "name": "bitacoraapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^30.0.1"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "datatable": "^2.0.2",
+    "datatables.net-bs5": "^2.0.5",
+    "dotenv": "^16.4.5",
+    "electron-store": "^8.2.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.7"
+  }
+}

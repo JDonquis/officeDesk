@@ -1,0 +1,35 @@
+:root {
+  --main-color1: rgba(172,215,242,1);
+  --main-color2: rgba(11,29,75,1);
+  --main-color3: rgba(1,17,64,1);
+  --main-color4: #0B8CD5;
+  --bg-main-color-white:#FBFBFB;
+
+}
+
+@font-face{
+  font-family: "Plus Jakarta Sans";
+  src:url(../fonts/jakarta_sans/PlusJakartaSans-VariableFont_wght.ttf);
+}
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; 
+}
+
+.bg-main
+{
+  background: linear-gradient(315deg, var(--main-color1) 9%,var(--main-color2) 87%, var(--main-color3) 93%);
+  background-repeat: no-repeat;
+}
+
+.h-full
+{
+  height: 100vh;
+}
+
+.overflow-hidden
+{
+  overflow: hidden;
+}
